@@ -81,7 +81,6 @@ public class WordCalc {
 		map.put("hundred", 100);
 		map.put("thousand", 1000);
 		
-		
         if (map.containsKey(stNumber))
         {
         	return map.get(stNumber);
@@ -92,7 +91,7 @@ public class WordCalc {
 		
 	}
 	
-	public static int stringWork(String stNumber){
+	public static int stringWorkNumbers(String stNumber){
 		int finalNumber = 0;
 		int remainder = 0;
 		
@@ -131,6 +130,35 @@ public class WordCalc {
 		  }
 		
 		return finalNumber;
+	}
+	
+	public static int stringWork(String stNumber){
+		String st1 = "";
+		String st2 = "";
+		int result = 0;
+
+		 // turn the string into an array taking " " as a character to separate
+		 String[] stArr = stNumber.split(" ");
+		 
+		 for (int i=0; i<stArr.length; i++){
+			 if (stArr[i].equals("minus") || stArr[i].equals("-")){
+				 for (int j=0; j<=i-1; j++){
+					 st1 += stArr[j] + " ";
+				 }
+				 for (int j=i+1; j<stArr.length; j++){
+					 st2 += stArr[j] + " ";
+				 }
+				 result = turnToInteger(st1) - turnToInteger(st2);
+				 System.out.println(turnToInteger(st1));
+				 System.out.println(turnToInteger(st2));
+				 System.out.println(st1);
+				 System.out.println(st2);
+				 System.out.println(result);
+			 }
+		 }
+		
+		
+		return result;
 	}
 
 }
