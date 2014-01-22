@@ -39,7 +39,7 @@ public class WordCalc {
 		System.out.println("Enter a number in a string form: ");
 		String stNumber = scanIn.nextLine();
 		
-		System.out.println(stringWork(stNumber));
+		System.out.println("Result: " + stringWork(stNumber));
  
 		
 		scanIn.close();
@@ -51,6 +51,7 @@ public class WordCalc {
 		HashMap<String, Integer> map = new HashMap<String, Integer> ();
 		
 		map.put("zero", 0);
+		map.put(null, 0);
 		map.put("one", 1);
 		map.put("two", 2);
 		map.put("three", 3);
@@ -94,21 +95,22 @@ public class WordCalc {
 	public static int stringWorkNumbers(String stNumber){
 		int finalNumber = 0;
 		int remainder = 0;
+		//String[] stArr = null;
 		
 		// remove all hyphens from the string
 		// e.g "twenty-one" will become "twenty one"
 		stNumber = stNumber.replace("-", " ");
-		
-		 // turn the string into an array taking " " as a character to separate
-		 String[] stArr = stNumber.split(" ");
-		 
+
+	
+		// turn the string into an array taking " " as a character to separate
+		String[] stArr = stNumber.split(" ");
 		  
 		 // remove all "and"-s in the sting, if any
 		 List<String> list = new ArrayList<String>(Arrays.asList(stArr));
 		 list.removeAll(Arrays.asList("and"));		 
-		 stArr = list.toArray(stArr);
+		 String[] stArr1 = list.toArray(stArr);
 
-		 for ( String ss : stArr) {
+		 for ( String ss : stArr1) {
 			 
 			   if (turnToInteger(ss) == 100){
 				   
@@ -136,6 +138,8 @@ public class WordCalc {
 		String st1 = "";
 		String st2 = "";
 		int result = 0;
+		
+
 
 		 // turn the string into an array taking " " as a character to separate
 		 String[] stArr = stNumber.split(" ");
@@ -148,14 +152,21 @@ public class WordCalc {
 				 for (int j=i+1; j<stArr.length; j++){
 					 st2 += stArr[j] + " ";
 				 }
-				 result = turnToInteger(st1) - turnToInteger(st2);
-				 System.out.println(turnToInteger(st1));
-				 System.out.println(turnToInteger(st2));
-				 System.out.println(st1);
-				 System.out.println(st2);
-				 System.out.println(result);
+				 result = stringWorkNumbers(st1) - stringWorkNumbers(st2);
+
+			 } else if (stArr[i].equals("plus") || stArr[i].equals("+")){
+				 for (int j=0; j<=i-1; j++){
+					 st1 += stArr[j] + " ";
+				 }
+				 for (int j=i+1; j<stArr.length; j++){
+					 st2 += stArr[j] + " ";
+				 }
+				 result = stringWorkNumbers(st1) + stringWorkNumbers(st2);
 			 }
 		 }
+		 
+		 System.out.println(stringWorkNumbers(st1) + "  " + stringWorkNumbers(st2));
+		 System.out.println(st1 + "   " + st2);
 		
 		
 		return result;
