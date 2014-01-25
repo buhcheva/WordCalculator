@@ -1,4 +1,4 @@
-/*
+/**
  * WordCalc.java is a program that can translate 
  * a written with words number (less than one million)
  * to a digital number.
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
-
+import org.apache.commons.lang.StringUtils;
 
 public class WordCalc {
 
@@ -36,15 +36,31 @@ public class WordCalc {
 		
 
 		Scanner scanIn = new Scanner(System.in);
-		System.out.println("Enter a number in a string form: ");
-		String stNumber = scanIn.nextLine();
-		
-		System.out.println("Result: " + stringWork(stNumber));
- 
+	
+		System.out.println("Start calculator?[Y/N]");
+
+		while (scanIn.hasNext() && (scanIn.nextLine().equalsIgnoreCase("y"))) {
+
+			System.out.println("Enter a number in a string form: ");
+			String stExpression = scanIn.nextLine();
+
+			stringWork(stExpression);
+
+			scanIn.nextLine();
+
+		    System.out.println("Continue?[Y/N]");
+		}
 		
 		scanIn.close();
 
 	}
+	
+	/**
+	 * Transforms the string keys into Integer values 
+	 * 
+	 * @param stNumber a key to a HashMap value
+	 * @return the value from the HashMap
+	 */
 	
 	public static int turnToInteger(String stNumber){
 		
@@ -92,10 +108,16 @@ public class WordCalc {
 		
 	}
 	
+	/**
+	 * Turns the string number into an integer
+	 * 
+	 * @param stNumber number in a string form
+	 * @return finalNumber number as integer
+	 */
+	
 	public static int stringWorkNumbers(String stNumber){
 		int finalNumber = 0;
 		int remainder = 0;
-		//String[] stArr = null;
 		
 		// remove all hyphens from the string
 		// e.g "twenty-one" will become "twenty one"
@@ -112,18 +134,24 @@ public class WordCalc {
 
 		 for ( String ss : stArr1) {
 			 
-			   if (turnToInteger(ss) == 100){
+			   if (turnToInteger(ss) == 100) {
 				   
 				   remainder = finalNumber % 1000;				   
 				   finalNumber += remainder * 100 - remainder;
 				   
-			   } else if (turnToInteger(ss) == 1000){
+			   } else if (turnToInteger(ss) == 1000) {
 				   
 				   finalNumber *= 1000;
 				   
-			   } else if(turnToInteger(ss) == -1){
+			   } else if (turnToInteger(ss) == -1) {
+				   
+				   if (StringUtils.isNumeric(ss)) {
+					   finalNumber += Integer.parseInt(ss);
+				   } else {
 			        System.out.println("The word '" + ss + "' is spelt wrongly.");
 			        System.exit(-1);
+				   }
+   
 		       } else{
 				   
 		           finalNumber += turnToInteger(ss);
@@ -134,15 +162,24 @@ public class WordCalc {
 		return finalNumber;
 	}
 	
-	public static int stringWork(String stNumber){
+	/**
+	 * Divides the entered string into smaller strings
+	 * Finds the math operator and does the calculation
+	 * 
+	 * @param stExpression the string entered by the user
+	 * @return result the result after the calculation has been carried out
+	 * 
+	 */
+	
+	public static void stringWork(String stExpression){
 		String st1 = "";
 		String st2 = "";
-		int result = 0;
+//		int result = 0;
 		
 
 
 		 // turn the string into an array taking " " as a character to separate
-		 String[] stArr = stNumber.split(" ");
+		 String[] stArr = stExpression.split(" ");
 		 
 		 for (int i=0; i<stArr.length; i++){
 			 if (stArr[i].equals("minus") || stArr[i].equals("-")){
@@ -152,7 +189,7 @@ public class WordCalc {
 				 for (int j=i+1; j<stArr.length; j++){
 					 st2 += stArr[j] + " ";
 				 }
-				 result = stringWorkNumbers(st1) - stringWorkNumbers(st2);
+				 System.out.println("Result: " + (stringWorkNumbers(st1) - stringWorkNumbers(st2)));
 
 			 } else if (stArr[i].equals("plus") || stArr[i].equals("+")){
 				 for (int j=0; j<=i-1; j++){
@@ -161,15 +198,30 @@ public class WordCalc {
 				 for (int j=i+1; j<stArr.length; j++){
 					 st2 += stArr[j] + " ";
 				 }
-				 result = stringWorkNumbers(st1) + stringWorkNumbers(st2);
+				 System.out.println("Result: " + (stringWorkNumbers(st1) + stringWorkNumbers(st2)));
+			 } else if (stArr[i].equals("multiplied") || stArr[i].equals("*")){
+			     for (int j=0; j<=i-1; j++){
+				     st1 += stArr[j] + " ";
+			     }
+			     for (int j=i+2; j<stArr.length; j++){
+				     st2 += stArr[j] + " ";
+			     }
+			     System.out.println("Result: " + (stringWorkNumbers(st1) * stringWorkNumbers(st2)));
+			     
+			 } else if (stArr[i].equals("divided") || stArr[i].equals("/")) {
+				 for (int j=0; j<=i-1; j++){
+				     st1 += stArr[j] + " ";
+			     }
+			     for (int j=i+2; j<stArr.length; j++){
+				     st2 += stArr[j] + " ";
+			     }
+			     System.out.format("Result: %.2f ", (float) stringWorkNumbers(st1) / stringWorkNumbers(st2));
 			 }
 		 }
 		 
-		 System.out.println(stringWorkNumbers(st1) + "  " + stringWorkNumbers(st2));
-		 System.out.println(st1 + "   " + st2);
+		// System.out.println(stringWorkNumbers(st1) + "  " + stringWorkNumbers(st2));
+		// System.out.println(st1 + "   " + st2);
 		
-		
-		return result;
 	}
 
 }
