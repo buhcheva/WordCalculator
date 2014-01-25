@@ -1,7 +1,16 @@
 /**
  * WordCalc.java is a program that can translate 
  * a written with words number (less than one million)
- * to a digital number.
+ * to a digital number and perform the four basic math operations:
+ * summation "+", subtraction "-", multiplication "*" and division "/".
+ * 
+ * It takes as an input either integer or string numbers.
+ * The operations can also be expressed either with words or characters.
+ * Reference list for the operations:
+ *     "plus" or "+"
+ *     "minus" or "-"
+ *     "multipliy with" or "*"
+ *     "divide by" or "/"
  * 
  * In case of a spelling mistake the user gets an error message.
  * 
@@ -167,16 +176,12 @@ public class WordCalc {
 	 * Finds the math operator and does the calculation
 	 * 
 	 * @param stExpression the string entered by the user
-	 * @return result the result after the calculation has been carried out
 	 * 
 	 */
 	
 	public static void stringWork(String stExpression){
 		String st1 = "";
 		String st2 = "";
-//		int result = 0;
-		
-
 
 		 // turn the string into an array taking " " as a character to separate
 		 String[] stArr = stExpression.split(" ");
@@ -199,7 +204,7 @@ public class WordCalc {
 					 st2 += stArr[j] + " ";
 				 }
 				 System.out.println("Result: " + (stringWorkNumbers(st1) + stringWorkNumbers(st2)));
-			 } else if (stArr[i].equals("multiplied") || stArr[i].equals("*")){
+			 } else if (stArr[i].equals("multiplyd") || stArr[i].equals("*")){
 			     for (int j=0; j<=i-1; j++){
 				     st1 += stArr[j] + " ";
 			     }
@@ -208,7 +213,7 @@ public class WordCalc {
 			     }
 			     System.out.println("Result: " + (stringWorkNumbers(st1) * stringWorkNumbers(st2)));
 			     
-			 } else if (stArr[i].equals("divided") || stArr[i].equals("/")) {
+			 } else if (stArr[i].equals("divide") || stArr[i].equals("/")) {
 				 for (int j=0; j<=i-1; j++){
 				     st1 += stArr[j] + " ";
 			     }
@@ -219,9 +224,6 @@ public class WordCalc {
 			 }
 		 }
 		 
-		// System.out.println(stringWorkNumbers(st1) + "  " + stringWorkNumbers(st2));
-		// System.out.println(st1 + "   " + st2);
-		
 	}
 
 }
