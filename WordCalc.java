@@ -23,7 +23,7 @@
  *  
  *  @file: WordCalc.java
  *  @author: Darina Buhcheva
- *  @date: 10/01/2013
+ *  @date: 10/01/2014
  * 
  * 
  */
